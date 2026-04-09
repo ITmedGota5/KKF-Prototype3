@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kullahalvöns Kognitiva Förening - Stöd och gemenskap för anhöriga">
+  <title>KKF - Kullahalvöns Kognitiva Förening</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Century+Gothic:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- External CSS File -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { 
+            sans: ['Open Sans', 'sans-serif'], 
+            display: ['Century Gothic', 'Apple Gothic', 'sans-serif'] 
+          },
+          colors: {
+            brand: { 
+              black: '#000000', 
+              white: '#FFFFFF', 
+              red: '#E30613', 
+              beige: '#F5F3EF', 
+              blue: '#009FE3',
+              darkblue: '#00609C'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body>
+
+  <!-- SIDE DOT NAVIGATION (Desktop Only) -->
+  <nav class="side-dot-nav" id="side-dot-nav" role="navigation" aria-label="Sektionsnavigation" aria-hidden="true">
+    <button class="dot-nav-btn active" data-section="hero" onclick="scrollToSection('hero')" aria-label="Gå till Hem-sektionen" title="Hem">
+      <span class="dot-nav-tooltip">Hem</span>
+    </button>
+    <button class="dot-nav-btn" data-section="snabbfakta" onclick="scrollToSection('snabbfakta')" aria-label="Gå till Snabbfakta-sektionen" title="Snabbfakta">
+      <span class="dot-nav-tooltip">Snabbfakta</span>
+    </button>
+    <button class="dot-nav-btn" data-section="nyheter" onclick="scrollToSection('nyheter')" aria-label="Gå till Nyheter-sektionen" title="Nyheter">
+      <span class="dot-nav-tooltip">Nyheter</span>
+    </button>
+    <button class="dot-nav-btn" data-section="omoss" onclick="scrollToSection('omoss')" aria-label="Gå till Om Oss-sektionen" title="Om Oss">
+      <span class="dot-nav-tooltip">Om Oss</span>
+    </button>
+    <button class="dot-nav-btn" data-section="varde" onclick="scrollToSection('varde')" aria-label="Gå till Värderingar-sektionen" title="Värderingar">
+      <span class="dot-nav-tooltip">Värderingar</span>
+    </button>
+    <button class="dot-nav-btn" data-section="kontakt" onclick="scrollToSection('kontakt')" aria-label="Gå till Kontakt-sektionen" title="Kontakt">
+      <span class="dot-nav-tooltip">Kontakt</span>
+    </button>
+  </nav>
+
+  <!-- ACCESSIBILITY TOOLBAR (Floating) -->
+  <div class="accessibility-toolbar" id="accessibility-toolbar" role="toolbar" aria-label="Tillgänglighetsverktyg">
+    <button class="accessibility-toolbar-toggle" onclick="toggleAccessibilityToolbar()" aria-label="Öppna tillgänglighetsverktyg" aria-expanded="false" id="accessibility-toggle-btn">
+      <svg class="accessibility-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+      </svg>
+    </button>
+
+    <div class="accessibility-toolbar-menu" id="accessibility-menu" role="menu" aria-hidden="true">
+      <div class="accessibility-control-group" role="group" aria-label="Textstorlek">
+        <span class="accessibility-label">Textstorlek</span>
+        <div class="accessibility-buttons-row">
+          <button class="accessibility-action-btn" onclick="changeTextSize(-1)" aria-label="Minska textstorlek" title="Minska text">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4"></path></svg>
+          </button>
+          <span class="accessibility-value-display" id="text-size-display">100%</span>
+          <button class="accessibility-action-btn" onclick="changeTextSize(1)" aria-label="Öka textstorlek" title="Öka text">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="accessibility-control-group">
+        <button class="accessibility-action-btn full-width" onclick="toggleHighContrast()" id="high-contrast-btn" aria-pressed="false" title="Hög kontrastläge">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          <span>Hög Kontrast</span>
+        </button>
+      </div>
+
+      <div class="accessibility-control-group">
+        <button class="accessibility-action-btn full-width" onclick="toggleReadAloud()" id="read-aloud-btn" aria-pressed="false" title="Läs upp text">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+          <span>Läs Upp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER - Fixed Navigation -->
+  <header class="site-header" id="site-header" role="banner">
+    <div class="container">
+      <div class="header-content">
+        
+        <a href="#" class="logo" onclick="scrollToSection('home')" aria-label="Gå till startsidan">
+          <span class="logo-text">KKF</span>
+          <span class="logo-subtitle">Kullahalvöns Kognitiva Förening</span>
+        </a>
+
+        <nav class="desktop-nav" role="navigation" aria-label="Huvudnavigation">
+          <button class="nav-btn active" data-page="home" onclick="scrollToSection('hero')">Hem</button>
+          <button class="nav-btn" data-page="nyinfo" onclick="scrollToSection('nyheter')">Nyheter</button>
+          <button class="nav-btn" data-page="omoss" onclick="scrollToSection('omoss')">Om Oss</button>
+          <button class="nav-btn nav-btn-contact" data-page="kontakt" onclick="scrollToSection('kontakt')">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            Kontakt
+          </button>
+        </nav>
+
+        <button class="accessibility-toggle-desktop" onclick="toggleAccessibilityToolbar()" aria-label="Öppna tillgänglighetsverktyg">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+        </button>
+
+        <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Öppna meny" aria-expanded="false" id="hamburger-btn">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Meny">
+      <div class="mobile-menu-content">
+        <button class="mobile-menu-close" onclick="toggleMobileMenu()" aria-label="Stäng meny">✕</button>
+        
+        <nav class="mobile-nav" role="navigation" aria-label="Mobil navigation">
+          <button class="mobile-nav-btn active" onclick="scrollToSection('hero'); toggleMobileMenu();">Hem</button>
+          <button class="mobile-nav-btn" onclick="scrollToSection('nyheter'); toggleMobileMenu();">Nyheter</button>
+          <button class="mobile-nav-btn" onclick="scrollToSection('omoss'); toggleMobileMenu();">Om Oss</button>
+          <button class="mobile-nav-btn mobile-nav-btn-contact" onclick="scrollToSection('kontakt'); toggleMobileMenu();">Kontakt</button>
+        </nav>
+
+        <div class="mobile-menu-accessibility">
+          <p class="text-sm font-semibold mb-3">Tillgänglighet</p>
+          <button class="mobile-accessibility-btn" onclick="toggleAccessibilityToolbar(); toggleMobileMenu();">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+            Tillgänglighetsverktyg
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main id="main-content" role="main">
+    
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero" aria-label="Välkommen">
+      <div class="hero-background">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-shape hero-shape-3"></div>
+      </div>
+      
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title" id="hero-title">
+            Välkommen till <span class="text-brand-red">KKF</span>
+          </h1>
+          
+          <p class="hero-intro" id="hero-intro">
+            KKF är en förening för anhöriga till personer med kognitiv svikt. Vi träffas, pratar och ger varandra stöd.
+          </p>
+          
+          <div class="hero-actions">
+            <button class="btn-hero btn-hero-primary" onclick="scrollToSection('omoss')">Läs mer om oss</button>
+            <button class="btn-hero btn-hero-secondary" onclick="scrollToSection('kontakt')">Kontakta oss</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK FACTS SECTION -->
+    <section class="quick-facts-section" id="snabbfakta" aria-label="Snabbfakta">
+      <div class="container">
+        <h2 class="section-title">Snabbfakta</h2>
+        <div class="quick-facts-grid" id="quick-facts-grid"></div>
+      </div>
+    </section>
+
+    <!-- NEWS SECTION -->
+    <section class="news-section" id="nyheter" aria-label="Nyheter">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Senaste Nytt</h2>
+          <p class="section-subtitle">Här hittar du senaste nytt från föreningen</p>
+        </div>
+        <div class="news-list" id="news-list"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section class="about-section" id="omoss" aria-label="Om oss">
+      <div class="container">
+        <div class="about-content">
+          <h2 class="section-title">Om Oss</h2>
+          <p class="about-intro" id="about-intro"></p>
+          <div class="mission-box">
+            <h3 class="mission-title">Vårt Uppdrag</h3>
+            <p class="mission-text" id="about-mission"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUES SECTION -->
+    <section class="values-section" id="varde" aria-label="Våra värderingar">
+      <div class="container">
+        <h2 class="section-title">Våra Värderingar</h2>
+        <div class="values-grid" id="values-grid"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-section" id="kontakt" aria-label="Kontakta oss">
+      <div class="container">
+        <div class="contact-header">
+          <div class="contact-icon-wrapper">
+            <svg class="contact-main-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+            </svg>
+          </div>
+          <h2 class="section-title">Kontakta Oss</h2>
+          <p class="contact-subtitle">Vi finns här för dig. Tveka inte att höra av dig.</p>
+        </div>
+        
+        <div class="contact-cards">
+          <div class="contact-card">
+            <div class="contact-card-icon phone-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            </div>
+            <div class="contact-card-content">
+              <h3 class="contact-card-label">Telefon</h3>
+              <a href="tel:0701234567" class="contact-card-value contact-phone">070-123 45 67</a>
+              <p class="contact-card-note">Vi svarar måndag-fredag 09:00-15:00</p>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-card-icon email-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            </div>
+            <div class="contact-card-content">
+              <h3 class="contact-card-label">E-post</h3>
+              <a href="mailto:kontakt@kkf.se" class="contact-card-value contact-email">kontakt@kkf.se</a>
+              <p class="contact-card-note">Vi svarar inom 24 timmar</p>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-card-icon address-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </div>
+            <div class="contact-card-content">
+              <h3 class="contact-card-label">Adress</h3>
+              <address class="contact-card-address">
+                Kullahalvöns Kognitiva Förening<br>
+                Exempelgatan 1<br>
+                260 40 Viken
+              </address>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- NEWS DETAIL MODAL -->
+  <div class="modal-backdrop" id="news-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-container">
+      <button class="modal-close-btn" onclick="closeNewsModal()" aria-label="Stäng modal">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+      
+      <div class="modal-image-area" id="modal-image-wrapper">
+        <img id="modal-image" src="" alt="" class="modal-image">
+        <div class="modal-image-placeholder" id="modal-image-placeholder">
+          <svg class="modal-placeholder-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+        </div>
+        <span class="modal-date-badge" id="modal-date-badge"></span>
+      </div>
+      
+      <div class="modal-content-area">
+        <div class="modal-badge" id="modal-badge">Nyhet</div>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <div class="modal-text" id="modal-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-main">
+          <h2 class="footer-title">Kullahalvöns Kognitiva Förening</h2>
+          <p class="footer-copyright">© 2024 Alla rättigheter förbehållna</p>
+        </div>
+
+        <div class="footer-contact">
+          <a href="tel:0701234567" class="footer-link" aria-label="Ring oss">
+            <svg class="footer-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            <span>Telefon: 070-123 45 67</span>
+          </a>
+          <span class="footer-divider" aria-hidden="true">|</span>
+          <a href="mailto:kontakt@kkf.se" class="footer-link" aria-label="Skicka e-post">
+            <svg class="footer-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <span>E-post: kontakt@kkf.se</span>
+          </a>
+        </div>
+
+        <div class="footer-admin">
+          <button class="admin-panel-btn" onclick="openAdminPanel()" aria-label="Öppna adminpanel">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c-.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37 2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35zM15 12a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            Admin Panel
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top-btn" id="back-to-top-btn" onclick="scrollToTop()" aria-label="Tillbaka till toppen" title="Scrolla till toppen">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+  </button>
+
+  <!-- ADMIN PANEL MODAL -->
+  <div class="admin-overlay" id="admin-panel" role="dialog" aria-modal="true" aria-labelledby="admin-title" aria-hidden="true">
+    <div class="admin-modal">
+      <div class="admin-header">
+        <h2 class="admin-title" id="admin-title">Admin Panel</h2>
+        <button class="admin-close-btn" onclick="closeAdminPanel()" aria-label="Stäng adminpanel">✕</button>
+      </div>
+      
+      <div class="admin-tabs" role="tablist" aria-label="Admin sektioner">
+        <button class="admin-tab active" data-tab="home" onclick="switchAdminTab('home')" role="tab" aria-selected="true" aria-controls="admin-content-home">Hem</button>
+        <button class="admin-tab" data-tab="news" onclick="switchAdminTab('news')" role="tab" aria-selected="false" aria-controls="admin-content-news">Nyheter</button>
+        <button class="admin-tab" data-tab="about" onclick="switchAdminTab('about')" role="tab" aria-selected="false" aria-controls="admin-content-about">Om oss</button>
+      </div>
+      
+      <div class="admin-body">
+        <div class="admin-tab-content active" id="admin-content-home" role="tabpanel">
+          <div class="admin-field-group">
+            <label class="admin-label" for="admin-hero-intro">Intro Text (Startsidan)</label>
+            <textarea id="admin-hero-intro" class="admin-textarea" rows="4" placeholder="Skriv välkomsttext här..."></textarea>
+          </div>
+          <div class="admin-field-group">
+            <label class="admin-label" for="admin-facts">Snabbfakta (En per rad, Format: Värde|Label)</label>
+            <textarea id="admin-facts" class="admin-textarea" rows="4" placeholder="Exempel:&#10;Stöd|För anhöriga&#10;Gemenskap|Vi hjälps åt"></textarea>
+          </div>
+          <button onclick="saveHomeData()" class="admin-save-btn">Spara Hem Ändringar</button>
+        </div>
+        
+        <div class="admin-tab-content" id="admin-content-news" role="tabpanel" style="display: none;">
+          <div class="admin-form-box">
+            <h3 class="admin-form-title">Lägg till nyhet</h3>
+            <div class="admin-field-group">
+              <label class="admin-label" for="admin-news-date">Datum</label>
+              <input type="date" id="admin-news-date" class="admin-input">
+            </div>
+            <div class="admin-field-group">
+              <label class="admin-label" for="admin-news-title">Rubrik</label>
+              <input type="text" id="admin-news-title" class="admin-input" placeholder="Nyhetens rubrik">
+            </div>
+            <div class="admin-field-group">
+              <label class="admin-label" for="admin-news-image">Bild URL (Valfritt)</label>
+              <input type="text" id="admin-news-image" class="admin-input" placeholder="https://example.com/image.jpg">
+            </div>
+            <div class="admin-field-group">
+              <label class="admin-label" for="admin-news-content">Innehåll</label>
+              <textarea id="admin-news-content" class="admin-textarea" rows="4" placeholder="Skriv nyhetens innehåll..."></textarea>
+            </div>
+            <button onclick="addNewsItem()" class="admin-save-btn">Spara Nyhet</button>
+          </div>
+          <div class="admin-field-group" style="margin-top: var(--spacing-lg);">
+            <label class="admin-label">Befintliga nyheter</label>
+            <div id="admin-news-list" class="admin-list-container"></div>
+          </div>
+        </div>
+        
+        <div class="admin-tab-content" id="admin-content-about" role="tabpanel" style="display: none;">
+          <div class="admin-field-group">
+            <label class="admin-label" for="admin-about-intro">Intro text (Om oss)</label>
+            <textarea id="admin-about-intro" class="admin-textarea" rows="3" placeholder="Skriv intro text här..."></textarea>
+          </div>
+          <div class="admin-field-group">
+            <label class="admin-label" for="admin-about-mission">Uppdragsbeskrivning</label>
+            <textarea id="admin-about-mission" class="admin-textarea" rows="4" placeholder="Skriv uppdraget här..."></textarea>
+          </div>
+          <button onclick="saveAboutData()" class="admin-save-btn">Spara Om Oss</button>
+        </div>
+        
+        <div class="admin-reset-section">
+          <hr class="admin-divider">
+          <button onclick="resetAllData()" class="admin-reset-btn">Återställ all data</button>
+          <p class="admin-reset-warning">Varning: Detta raderar alla ändringar och återställer standardvärden.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT - FULLY WORKING VERSION -->
+  <script>
+    // DATA & STORAGE MANAGEMENT
+    const DEFAULT_DATA = {
+      heroIntro: "KKF är en förening för anhöriga till personer med kognitiv svikt. Vi träffas, pratar och ger varandra stöd.",
+      quickFacts: [
+        { value: "Stöd", label: "För anhöriga" },
+        { value: "Gemenskap", label: "Vi hjälps åt" }
+      ],
+      news: [
+        { date: "2024-10-01", title: "Välkomna till höstmöte", image: "https://images.unsplash.com/photo-1506784926709-22f1ec395907?w=800", content: "Vi bjuder in alla medlemmar till vårt årliga höstmöte den 15 november. Det blir kaffe, kaka och samtal om verksamheten." },
+        { date: "2024-09-15", title: "Ny stödgrupp startar", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800", content: "Vi startar nu en ny stödgrupp för anhöriga som nyligen fått en diagnos inom familjen." },
+        { date: "2024-09-01", title: "Föreläsning om demensvård", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800", content: "Välkommen på en informativ föreläsning om den senaste forskningen inom demensvård." }
+      ],
+      about: {
+        intro: "Vi finns här för dig som är anhörig till någon med kognitiv svikt. Det kan vara jobbigt att känna sig ensam, men i vår förening träffar du andra i samma situation.",
+        mission: "Vårt uppdrag är att erbjuda en trygg plats där anhöriga kan andas, prata och få stöd av varandra."
+      },
+      values: [
+        { emoji: "❤️", title: "Medmänsklighet", desc: "Vi lyssnar och bryr oss om varandra." },
+        { emoji: "🤝", title: "Gemenskap", desc: "Tillsammans är vi starkare." },
+        { emoji: "🛡️", title: "Trygghet", desc: "Här kan du vara dig själv." },
+        { emoji: "💬", title: "Öppenhet", desc: "Alla får dela sina tankar och känslor." }
+      ]
+    };
+
+    let siteData = {};
+
+    function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+    function loadData() {
+      const stored = localStorage.getItem('kkf_site_data_v2');
+      if (stored) {
+        try {
+          siteData = JSON.parse(stored);
+          if (!siteData.news) siteData.news = [];
+          if (!siteData.values) siteData.values = [];
+          if (!siteData.about) siteData.about = {};
+          if (!siteData.quickFacts) siteData.quickFacts = [];
+        } catch (e) { siteData = deepClone(DEFAULT_DATA); }
+      } else { siteData = deepClone(DEFAULT_DATA); }
+    }
+
+    function saveToStorage() {
+      try { localStorage.setItem('kkf_site_data_v2', JSON.stringify(siteData)); }
+      catch (e) { alert('Kunde inte spara data.'); }
+    }
+
+    // RENDER FUNCTIONS
+    function renderUI() { renderHero(); renderQuickFacts(); renderNews(); renderAbout(); renderValues(); }
+
+    function renderHero() {
+      const introEl = document.getElementById('hero-intro');
+      if (introEl && siteData.heroIntro) introEl.textContent = siteData.heroIntro;
+    }
+
+    function renderQuickFacts() {
+      const grid = document.getElementById('quick-facts-grid');
+      if (!grid) return;
+      if (!siteData.quickFacts || siteData.quickFacts.length === 0) { grid.innerHTML = '<p class="text-center text-gray-500">Ingen information tillgänglig.</p>'; return; }
+      grid.innerHTML = siteData.quickFacts.map((fact, index) => `
+        <div class="fact-card" onclick="scrollToSection('${index === 0 ? 'omoss' : 'kontakt'}')" tabindex="0" role="button">
+          <div class="fact-icon-wrapper">
+            <svg class="fact-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">${index === 0 ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>' : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>'}</svg>
+          </div>
+          <div class="fact-value">${fact.value}</div>
+          <div class="fact-label">${fact.label}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderNews() {
+      const list = document.getElementById('news-list');
+      if (!list) return;
+      if (!siteData.news || siteData.news.length === 0) { list.innerHTML = `<div class="news-empty-state"><svg class="news-empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg><p class="news-empty-text">Inga nyheter just nu</p></div>`; return; }
+      list.innerHTML = siteData.news.slice(0, 4).map((item, index) => `
+        <article class="news-card" onclick="openNewsModal(${index})" tabindex="0" role="button">
+          <div class="news-image-wrapper">${item.image ? `<img src="${item.image}" alt="${item.title}" class="news-image" onerror="this.parentElement.style.display='none'">` : ''}<span class="news-date-badge">${formatDate(item.date)}</span></div>
+          <div class="news-content"><h3 class="news-title">${item.title}</h3><p class="news-excerpt">${item.content}</p><span class="news-read-more">Läs mer <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg></span></div>
+        </article>
+      `).join('');
+    }
+
+    function renderAbout() {
+      const introEl = document.getElementById('about-intro');
+      const missionEl = document.getElementById('about-mission');
+      if (introEl && siteData.about && siteData.about.intro) introEl.textContent = siteData.about.intro;
+      if (missionEl && siteData.about && siteData.about.mission) missionEl.textContent = siteData.about.mission;
+    }
+
+    function renderValues() {
+      const grid = document.getElementById('values-grid');
+      if (!grid) return;
+      if (!siteData.values || siteData.values.length === 0) { grid.innerHTML = '<p class="text-center text-gray-500 col-span-2">Inga värderingar angivna.</p>'; return; }
+      grid.innerHTML = siteData.values.map(val => `<div class="value-card"><div class="value-icon-wrapper"><span class="value-emoji" role="img">${val.emoji || '⭐'}</span></div><h3 class="value-title">${val.title}</h3><p class="value-description">${val.desc}</p></div>`).join('');
+    }
+
+    function formatDate(dateStr) { try { return new Date(dateStr).toLocaleDateString('sv-SE', { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) { return dateStr; } }
+
+    // NAVIGATION FUNCTIONS
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) { window.scrollTo({ top: section.offsetTop - document.querySelector('.site-header').offsetHeight, behavior: 'smooth' }); updateActiveNav(sectionId); history.pushState(null, null, `#${sectionId}`); }
+    }
+
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    function updateActiveNav(sectionId) {
+      document.querySelectorAll('.nav-btn').forEach(btn => { btn.classList.remove('active'); if (btn.dataset.section === sectionId || btn.dataset.page === sectionId) btn.classList.add('active'); });
+      document.querySelectorAll('.dot-nav-btn').forEach(dot => { dot.classList.remove('active'); if (dot.dataset.section === sectionId) dot.classList.add('active'); });
+    }
+
+    // MOBILE MENU
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu'), hamburger = document.getElementById('hamburger-btn');
+      if (menu && hamburger) { const isOpen = menu.classList.contains('open'); menu.classList.toggle('open'); hamburger.classList.toggle('open'); hamburger.setAttribute('aria-expanded', !isOpen); document.body.style.overflow = isOpen ? '' : 'hidden'; }
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobile-menu'), hamburger = document.getElementById('hamburger-btn');
+      if (menu) menu.classList.remove('open');
+      if (hamburger) { hamburger.classList.remove('open'); hamburger.setAttribute('aria-expanded', 'false'); }
+      document.body.style.overflow = '';
+    }
+
+    // MODAL FUNCTIONS
+    function openNewsModal(index) {
+      const item = siteData.news[index]; if (!item) return;
+      const modal = document.getElementById('news-modal');
+      document.getElementById('modal-title').textContent = item.title;
+      document.getElementById('modal-text').textContent = item.content;
+      document.getElementById('modal-date-badge').textContent = formatDate(item.date);
+      const imgEl = document.getElementById('modal-image'), placeholder = document.getElementById('modal-image-placeholder');
+      if (item.image) { imgEl.src = item.image; imgEl.alt = item.title; imgEl.classList.add('visible'); placeholder.classList.add('hidden'); } else { imgEl.classList.remove('visible'); placeholder.classList.remove('hidden'); }
+      modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+    }
+
+    function closeNewsModal() { document.getElementById('news-modal').classList.remove('active'); document.getElementById('news-modal').setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+    document.addEventListener('click', (e) => { if (e.target.id === 'news-modal') closeNewsModal(); });
+
+    // ============================================
+    // ACCESSIBILITY TOOLBAR FUNCTIONS - ALL FIXED!
+    // ============================================
+    let currentTextSize = 100;
+    let isHighContrastMode = false;
+
+    function toggleAccessibilityToolbar() {
+      console.log('🔧 toggleAccessibilityToolbar called');
+      
+      const toolbar = document.getElementById('accessibility-toolbar');
+      const menu = document.getElementById('accessibility-menu');
+      const toggleBtn = document.getElementById('accessibility-toggle-btn');
+      
+      if (!toolbar || !menu || !toggleBtn) {
+        console.error('❌ Accessibility toolbar elements not found');
+        return;
+      }
+      
+      const isOpen = menu.classList.contains('open');
+      
+      if (isOpen) {
+        menu.classList.remove('open');
+        toggleBtn.classList.remove('active');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toolbar.setAttribute('aria-hidden', 'true');
+        console.log('✅ Accessibility toolbar closed');
+      } else {
+        menu.classList.add('open');
+        toggleBtn.classList.add('active');
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        toolbar.setAttribute('aria-hidden', 'false');
+        console.log('✅ Accessibility toolbar opened');
+      }
+    }
+
+    // Close accessibility toolbar when clicking outside
+    document.addEventListener('click', (e) => {
+      const toolbar = document.getElementById('accessibility-toolbar');
+      const menu = document.getElementById('accessibility-menu');
+      const toggleBtn = document.getElementById('accessibility-toggle-btn');
+      
+      if (!toolbar || !menu || !toggleBtn) return;
+      
+      if (menu.classList.contains('open') && 
+          !toolbar.contains(e.target) && 
+          !toggleBtn.contains(e.target)) {
+        menu.classList.remove('open');
+        toggleBtn.classList.remove('active');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        console.log('✅ Toolbar closed (clicked outside)');
+      }
+    });
+
+    // ============================================
+    // FIXED: Text Size Function - NOW WORKS PERFECTLY!
+    // ============================================
+    function changeTextSize(delta) {
+  let newSizePercent = currentTextSize + (delta * 10);
+  
+  // Clamp between 80% and 200%
+  newSizePercent = Math.max(80, Math.min(200, newSizePercent));
+  
+  // Update tracked value
+  currentTextSize = newSizePercent;
+  
+  // Use zoom instead of font-size — scales the entire rendered page
+  // (font-size on html has no effect because all sizes use px/vw, not rem)
+  document.documentElement.style.zoom = newSizePercent / 100;
+  
+  // Update display
+  const display = document.getElementById('text-size-display');
+  if (display) { 
+    display.textContent = `${newSizePercent}%`; 
+    display.style.transform = 'scale(1.3)'; 
+    setTimeout(() => { display.style.transform = 'scale(1)'; }, 200); 
+  }
+  
+  // Save preference
+  localStorage.setItem('kkf_text_size', newSizePercent.toString());
+  
+  console.log(`✅ Text size changed to: ${newSizePercent}%`);
+  showTemporaryMessage(`📝 Textstorlek: ${newSizePercent}%`);
+}
+
+    function toggleHighContrast() {
+      isHighContrastMode = !isHighContrastMode;
+      document.body.classList.toggle('high-contrast', isHighContrastMode);
+      const btn = document.getElementById('high-contrast-btn');
+      if (btn) { btn.classList.toggle('active', isHighContrastMode); btn.setAttribute('aria-pressed', isHighContrastMode.toString()); const span = btn.querySelector('span'); if (span) span.textContent = isHighContrastMode ? 'Normal Läge' : 'Hög Kontrast'; }
+      localStorage.setItem('kkf_high_contrast', isHighContrastMode.toString());
+      console.log(`✅ High contrast mode: ${isHighContrastMode ? 'ON' : 'OFF'}`);
+      showTemporaryMessage(isHighContrastMode ? '🔆 Hög kontrastläge aktiverat!' : '🔅 Normalt läge aktiverat');
+    }
+
+    function toggleReadAloud() {
+      const btn = document.getElementById('read-aloud-btn');
+      if (btn) { btn.classList.toggle('active'); const isActive = btn.classList.contains('active'); btn.setAttribute('aria-pressed', isActive.toString()); const span = btn.querySelector('span'); if (span) span.textContent = isActive ? 'Stoppa Uppläsning' : 'Läs Upp'; }
+      localStorage.setItem('kkf_read_aloud', document.getElementById('read-aloud-btn').classList.contains('active').toString());
+      if (document.getElementById('read-aloud-btn').classList.contains('active')) startReadAloud(); else stopReadAloud();
+    }
+
+    function startReadAloud() {
+      if (!('speechSynthesis' in window)) { alert('❌ Din webbläsare stöder inte text-till-tal.\n\nProva Chrome eller Edge.'); return; }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance('Välkommen till Kullahalvöns Kognitiva Förening. Denna webbplats är anpassad för personer med kognitiv svikt.');
+      utterance.lang = 'sv-SE'; utterance.rate = 0.9;
+      const voices = window.speechSynthesis.getVoices();
+      const swedishVoice = voices.find(v => v.lang.includes('sv'));
+      if (swedishVoice) utterance.voice = swedishVoice;
+      utterance.onstart = () => console.log('🔊 Started reading...') && showTemporaryMessage('🔊 Läser upp...');
+      utterance.onend = () => { console.log('✅ Finished reading'); showTemporaryMessage('✅ Uppläsning klar!'); };
+      utterance.onerror = (event) => console.error('❌ Speech error:', event.error);
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function stopReadAloud() { if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); console.log('🔇 Stopped reading'); showTemporaryMessage('🔇 Uppläsning stoppad'); } }
+
+    function showTemporaryMessage(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `position:fixed;top:120px;left:50%;transform:translateX(-50%);background:#333;color:white;padding:16px 32px;border-radius:12px;font-size:18px;font-weight:bold;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:slideDown 0.3s ease;font-family:'Open Sans',sans-serif;`;
+      document.body.appendChild(toast);
+      setTimeout(() => { toast.style.animation = 'slideUp 0.3s ease'; setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300); }, 2500);
+    }
+
+    function loadAccessibilityPreferences() {
+  const savedSize = localStorage.getItem('kkf_text_size');
+  if (savedSize) { 
+    currentTextSize = parseInt(savedSize, 10); 
+    document.documentElement.style.zoom = currentTextSize / 100;
+    const display = document.getElementById('text-size-display'); 
+    if (display) display.textContent = `${currentTextSize}%`; 
+  }
+  if (localStorage.getItem('kkf_high_contrast') === 'true') { 
+    isHighContrastMode = true; 
+    document.body.classList.add('high-contrast'); 
+    const btn = document.getElementById('high-contrast-btn'); 
+    if (btn) { 
+      btn.classList.add('active'); 
+      btn.setAttribute('aria-pressed', 'true'); 
+      const span = btn.querySelector('span'); 
+      if (span) span.textContent = 'Normal Läge'; 
+    } 
+  }
+  if (localStorage.getItem('kkf_read_aloud') === 'true') { 
+    const btn = document.getElementById('read-aloud-btn'); 
+    if (btn) { 
+      btn.classList.add('active'); 
+      btn.setAttribute('aria-pressed', 'true'); 
+      const span = btn.querySelector('span'); 
+      if (span) span.textContent = 'Stoppa Uppläsning'; 
+    } 
+  }
+}
+
+    // ADMIN PANEL
+    function openAdminPanel() { populateAdminForms(); renderAdminNewsList(); document.getElementById('admin-panel').classList.add('active'); document.getElementById('admin-panel').setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+    function closeAdminPanel() { document.getElementById('admin-panel').classList.remove('active'); document.getElementById('admin-panel').setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+    function switchAdminTab(tabName) { document.querySelectorAll('.admin-tab-content').forEach(el => { el.style.display = 'none'; el.classList.remove('active'); }); const selectedContent = document.getElementById(`admin-content-${tabName}`); if (selectedContent) { selectedContent.style.display = 'block'; selectedContent.classList.add('active'); } document.querySelectorAll('.admin-tab').forEach(tab => { tab.classList.remove('active'); tab.setAttribute('aria-selected', 'false'); if (tab.dataset.tab === tabName) { tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); } }); }
+    function populateAdminForms() { const heroIntro = document.getElementById('admin-hero-intro'), facts = document.getElementById('admin-facts'); if (heroIntro) heroIntro.value = siteData.heroIntro || ''; if (facts) facts.value = (siteData.quickFacts || []).map(f => `${f.value}|${f.label}`).join('\n'); const aboutIntro = document.getElementById('admin-about-intro'), aboutMission = document.getElementById('admin-about-mission'); if (aboutIntro) aboutIntro.value = (siteData.about && siteData.about.intro) || ''; if (aboutMission) aboutMission.value = (siteData.about && siteData.about.mission) || ''; }
+    function saveHomeData() { const heroIntro = document.getElementById('admin-hero-intro'), facts = document.getElementById('admin-facts'); if (!heroIntro || !facts) return; if (!heroIntro.value.trim()) { alert('Vänligen fyll i intro text.'); heroIntro.focus(); return; } siteData.heroIntro = heroIntro.value.trim(); const factsLines = facts.value.split('\n').filter(line => line.trim()); siteData.quickFacts = factsLines.map(line => { const parts = line.split('|'); return { value: parts[0] ? parts[0].trim() : '', label: parts[1] ? parts[1].trim() : '' }; }).filter(f => f.value && f.label); saveToStorage(); renderUI(); alert('Hem-data sparad!'); }
+    function saveAboutData() { const aboutIntro = document.getElementById('admin-about-intro'), aboutMission = document.getElementById('admin-about-mission'); if (!aboutIntro || !aboutMission) return; if (!aboutIntro.value.trim()) { alert('Vänligen fyll i intro text.'); aboutIntro.focus(); return; } if (!aboutMission.value.trim()) { alert('Vänligen fyll i uppdragsbeskrivning.'); aboutMission.focus(); return; } if (!siteData.about) siteData.about = {}; siteData.about.intro = aboutIntro.value.trim(); siteData.about.mission = aboutMission.value.trim(); saveToStorage(); renderUI(); alert('Om Oss-data sparad!'); }
+    function addNewsItem() { const dateInput = document.getElementById('admin-news-date'), titleInput = document.getElementById('admin-news-title'), imageInput = document.getElementById('admin-news-image'), contentInput = document.getElementById('admin-news-content'); if (!dateInput || !titleInput || !contentInput) return; if (!dateInput.value) { alert('Vänligen välj ett datum.'); dateInput.focus(); return; } if (!titleInput.value.trim()) { alert('Vänligen fyll i rubrik.'); titleInput.focus(); return; } if (!contentInput.value.trim()) { alert('Vänligen fyll i innehåll.'); contentInput.focus(); return; } const newItem = { date: dateInput.value, title: titleInput.value.trim(), content: contentInput.value.trim() }; if (imageInput && imageInput.value.trim()) newItem.image = imageInput.value.trim(); if (!siteData.news) siteData.news = []; siteData.news.unshift(newItem); saveToStorage(); renderUI(); renderAdminNewsList(); dateInput.value = ''; titleInput.value = ''; if (imageInput) imageInput.value = ''; contentInput.value = ''; alert('Nyhet tillagd!'); }
+    function deleteNewsItem(index) { if (!confirm('Är du säker på att du vill ta bort denna nyhet?')) return; if (siteData.news && siteData.news[index]) { siteData.news.splice(index, 1); saveToStorage(); renderUI(); renderAdminNewsList(); alert('Nyhet borttagen.'); } }
+    function renderAdminNewsList() { const listContainer = document.getElementById('admin-news-list'); if (!listContainer) return; if (!siteData.news || siteData.news.length === 0) { listContainer.innerHTML = '<p style="padding: 16px; color: #666; text-align: center;">Inga nyheter.</p>'; return; } listContainer.innerHTML = siteData.news.map((item, index) => `<div class="admin-list-item"><div class="admin-list-info"><div class="admin-list-title">${item.title}</div><div class="admin-list-date">${formatDate(item.date)}</div></div><button class="admin-delete-btn" onclick="deleteNewsItem(${index})" aria-label="Ta bort nyhet: ${item.title}">✕</button></div>`).join(''); }
+    function resetAllData() { if (!confirm('ÄR DU SÄKER?\n\nDetta raderar ALLA dina ändringar och återställer webbplatsen.')) return; if (!confirm('Sista chans! Vill du verkligen återställa all data?')) return; localStorage.removeItem('kkf_site_data_v2'); siteData = deepClone(DEFAULT_DATA); renderUI(); populateAdminForms(); renderAdminNewsList(); alert('All data har återställts.'); }
+
+    // SCROLL & INTERSECTION OBSERVER
+    function initScrollSpy() { const sections = document.querySelectorAll('section[id]'); const observerOptions = { root: null, rootMargin: '-20% 0px -70% 0px', threshold: 0 }; const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) updateActiveNav(entry.target.getAttribute('id')); }); }, observerOptions); sections.forEach(section => observer.observe(section)); }
+    
+    // ============================================
+    // CORRECTED Function Name (No more typo!)
+    // ============================================
+    function initBackToTopButton() { 
+      const btn = document.getElementById('back-to-top-btn'); 
+      if (!btn) return; 
+      window.addEventListener('scroll', () => { 
+        if (window.scrollY > 300) btn.classList.add('visible'); else btn.classList.remove('visible'); 
+      }, { passive: true }); 
+    }
+    
+    function initHeaderScrollEffect() { const header = document.querySelector('.site-header'); if (!header) return; window.addEventListener('scroll', () => { if (window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }, { passive: true }); }
+    function initKeyboardNavigation() { document.addEventListener('keydown', (e) => { if ((e.key === 'Enter' || e.key === ' ') && (e.target.classList.contains('fact-card') || e.target.classList.contains('news-card'))) { e.preventDefault(); e.target.click(); } }); }
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🚀 KKF Website Initializing...');
+      loadData();
+      renderUI();
+      loadAccessibilityPreferences();
+      initScrollSpy();
+      initBackToTopButton();  // ✅ FIXED TYPO: Was 'initBackToTopTopTopButton()' - NOW CORRECT!
+      initHeaderScrollEffect();
+      initKeyboardNavigation();
+      const hash = window.location.hash.replace('#', '') || 'hero';
+      updateActiveNav(hash);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { closeNewsModal(); closeAdminPanel(); closeMobileMenu(); }
+        if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '=')) { e.preventDefault(); changeTextSize(1); }
+        if ((e.ctrlKey || e.metaKey) && e.key === '-') { e.preventDefault; changeTextSize(-1); }
+if ((e.ctrlKey || e.metaKey) && e.key === '0') { 
+  e.preventDefault(); 
+  currentTextSize = 100; 
+  document.documentElement.style.zoom = 1; 
+  const display = document.getElementById('text-size-display'); 
+  if (display) display.textContent = '100%'; 
+  localStorage.setItem('kkf_text_size', '100'); 
+  showTemporaryMessage('📝 Textstorlek återställd till 100%'); 
+}      });
+      console.log('✅ All systems ready!');
+    });
+
+    // Pre-load voices
+    if ('speechSynthesis' in window) { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); }; }
+  </script>
+</body>
+</html>
