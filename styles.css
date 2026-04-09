@@ -376,28 +376,6 @@ button {
 
 .nav-icon { width: 24px; height: 24px; }
 
-/* Accessibility Toggle (Desktop) */
-.accessibility-toggle-desktop {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-light-mist);
-  color: var(--color-text-dark);
-  transition: all 0.2s ease;
-  margin-left: var(--spacing-sm);
-}
-
-@media (min-width: 1025px) { .accessibility-toggle-desktop { display: flex; } }
-
-.accessibility-toggle-desktop:hover,
-.accessibility-toggle-desktop:focus {
-  background-color: var(--color-primary-blue);
-  color: white;
-  transform: scale(1.05);
-}
 
 /* Hamburger Button */
 .hamburger-btn {
